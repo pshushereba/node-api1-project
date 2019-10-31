@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 
-const AddUser = () => {
+const AddUser = (props) => {
     const [userInfo, setUserInfo] = useState({name: "", bio: ""});
 
     const handleChange = (event) => {
@@ -12,7 +12,8 @@ const AddUser = () => {
         e.preventDefault();
         axios.post("http://localhost:5000/api/users", userInfo)
             .then((res) => {
-                console.log(res);
+                props.setUsers([...props.users, res.data])
+                props.setIsUpdated(!props.isUpdated)
             })
             .catch((err) => console.log(err))
         };
